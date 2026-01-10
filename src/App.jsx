@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import PokemonList from './pages/PokemonList'
 import './App.css'
 import PokemonForm from './pages/PokemonForm'
+import PokemonDetail from './pages/PokemonDetail'
 import TrainerList from './components/TrainerList'
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
           {/* Rutas y componentes irían aquí */}
           <Routes>
             <Route path="/" element={<PokemonList />} />
+            <Route path="/pokemons/:id" element={<PokemonDetail />} />
             <Route path="/add-pokemon" element={<PokemonForm />} />
+            <Route path="/edit-pokemon/:id" element={<PokemonForm />} />
             <Route path="/trainers" element={<TrainerList />} />
             <Route path="/login" element={<Login />} />
           </Routes>

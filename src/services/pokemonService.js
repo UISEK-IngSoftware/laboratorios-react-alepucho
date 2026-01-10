@@ -47,3 +47,25 @@ export async function fetchPokemons () {
     const response = await axios.get(`${API_BASE_URL}/pokemons`);
     return response.data;
 }
+export async function deletePokemon(pokemonId){
+    const response = await axios.delete(`${API_BASE_URL}/pokemons/${pokemonId}/`);
+    return response.data;
+}
+export async function getPokemonById(pokemonId){
+    const response = await axios.get(`${API_BASE_URL}/pokemons/${pokemonId}/`);
+    return response.data;
+}
+export async function updatePokemon(pokemonId, pokemonData){
+    let pictureBase64= "";
+    if(pokemonData.picture && typeof pokemonData.picture !== 'string'){
+        pictureBase64= await fileToBase64(pokemonData.picture);
+    } else if(typeof pokemonData.picture === 'string'){
+        pictureBase64= pokemonData.picture;
+    }
+    const payload={
+        ...pokemonData,
+        picture: pictureBase64 || pokemonData.picture
+    }
+    const response = await axios.put(`${API_BASE_URL}/pokemons/${pokemonId}/`, payload);
+    return response.data;
+}
