@@ -1,23 +1,20 @@
-import { Card, CardContent, CardMedia, Typography, CardActions, Button } from "@mui/material";
+import { Card, CardContent, Typography, CardActions, Button } from "@mui/material";
 import "./TrainerCard.css";
 
 const API_MEDIA_URL = import.meta.env.VITE_API_MEDIA_URL
 
-export default function TrainerCard({ Trainer }) {
-    const TrainerImageURL = `${API_MEDIA_URL}/${Trainer.picture}`;
-
+export default function TrainerCard({ trainer, onDelete, onUpdate, onDetails }) {
     return (
         <Card>
             <CardContent>
                 <Typography className="titulo" variant="h5" component="div">
-                    {Trainer.name}
-                </Typography>
-                <Typography className="cuerpo" variant="body2">
-                    Type: {Trainer.level}
+                    {trainer.name}
                 </Typography>
             </CardContent>
             <CardActions className="modelo-b">
-                <Button className="Boton" size="small">Más información</Button>
+                <Button size="small" onClick={() => onDetails(trainer.id)}>Detalles</Button>
+                <Button size="small" color="error" onClick={() => onDelete(trainer.id)}>Eliminar</Button>
+                <Button size="small" color="primary" onClick={() => onUpdate(trainer.id)}>Actualizar</Button>
             </CardActions>
         </Card>
     );

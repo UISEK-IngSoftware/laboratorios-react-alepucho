@@ -17,6 +17,7 @@ export default function PokemonForm() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [pictureChanged, setPictureChanged] = useState(false);
   const navigate = useNavigate();
 
   // Cargar datos del pokemon si es edición
@@ -30,8 +31,9 @@ export default function PokemonForm() {
             type: data.type,
             weight: data.weight,
             height: data.height,
-            picture: data.picture // Será string (URL)
+            picture: data.picture // Será string (base64 o URL)
           });
+          setPictureChanged(false);
         })
         .catch(error => {
           console.error('Error al cargar pokemon:', error);
@@ -44,7 +46,10 @@ export default function PokemonForm() {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'picture') {
-      setPokemonData({ ...pokemonData, picture: files[0] });
+      if (files.length > 0) {
+        setPokemonData({ ...pokemonData, picture: files[0] });
+        setPictureChanged(true);
+      }
     } else {
       setPokemonData({ ...pokemonData, [name]: value });
     }
@@ -53,7 +58,7 @@ export default function PokemonForm() {
     e.preventDefault();
     try{
       if (isEdit) {
-        await updatePokemon(id, pokemonData);
+        await updatePokemon(id, pokemonData, pictureChanged);
         alert('Pokémon actualizado con éxito');
       } else {
         await createPokemon(pokemonData);
@@ -79,6 +84,7 @@ export default function PokemonForm() {
           <TextField label="Tipo" name="type" variant="outlined" value={pokemonData.type} onChange={handleChange}/>
           <TextField label="Peso" name="weight" variant="outlined" type="number" value={pokemonData.weight} onChange={handleChange}/>
           <TextField label="Altura" name="height" variant="outlined" type="number" value={pokemonData.height} onChange={handleChange}/>
+          {pokemonData.picture && <img src={pokemonData.picture} alt="Pokemon" style={{ maxWidth: '200px' }} />}
           <input type="file" name="picture" accept="image/*" className="picture" onChange={handleChange}/>
           <Button type="submit" variant="contained">{isEdit ? 'Actualizar' : 'Guardar'}</Button>
         </Box>

@@ -7,6 +7,8 @@ import './App.css'
 import PokemonForm from './pages/PokemonForm'
 import PokemonDetail from './pages/PokemonDetail'
 import TrainerList from './components/TrainerList'
+import TrainerForm from './pages/TrainerForm'
+import TrainerDetail from './pages/TrainerDetail'
 
 function App() {
   return (
@@ -21,7 +23,10 @@ function App() {
             <Route path="/add-pokemon" element={<PokemonForm />} />
             <Route path="/edit-pokemon/:id" element={<PokemonForm />} />
             <Route path="/trainers" element={<TrainerList />} />
+            <Route path="/trainers/:id" element={<TrainerDetail />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/add-trainer" element={<TrainerForm />} />
+            <Route path="/edit-trainer/:id" element={<TrainerForm />} />
           </Routes>
         </BrowserRouter>
       </Container>
